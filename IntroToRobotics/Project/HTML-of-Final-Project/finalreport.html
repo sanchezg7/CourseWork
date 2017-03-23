@@ -1,0 +1,350 @@
+<html>
+<head>
+	<title>Intro To Robotics Final Project CAP.4662.001</title>
+</head>
+<body bgcolor="#FFFFFF">
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+</body>
+</html>
+<p><br />
+<title></title>
+</p>
+
+<h2 style="text-align: center;">Intro To Robotics Final Project CAP.4662.001</h2>
+
+<p><strong>Team Members</strong></p>
+
+<p>Gerardo Sanchez</p>
+
+<p>Anthony Baker</p>
+
+<p>Jonas Graf</p>
+
+<p><strong><span style="font-size:22px;">Objective</span></strong>: <span style="font-size:16px;">Acheive trajectory motion with the Nao Robot</span></p>
+
+<p><strong><span style="font-size: 22px;">Introduction:</span></strong></p>
+
+<p><span style="font-size:16px;">The alderan robot is a full fledged humanoid robot that features many sensors for multiple applications. It can be programmed to function autonomously or to tackle specific routines at the discretion of the objective. The robot is used for&nbsp;many purposes&nbsp;ranging from research to educational programs. There are many videos online showing the possibilities of perfoming dance moves, drawing pictures, and even public speaking. This project&nbsp;focuses&nbsp;on the kinematics of the robot by making it throw a ball into a cup a certain distance away.</span></p>
+
+<p><span style="font-size:16px;">For the purpose of this project, our group divided the structure of the project in three separate stages. Each stage marked different check points in our project.&nbsp;With the use of the Alderan Nao Robot, our team develop a script to allow the robot to throw a ball. All the code development was conducted&nbsp;through&nbsp;Python, which Alderan provided&nbsp;libraries to support the interface of the robot. The libraries make calls to move the robot appendages, so long as it is within the physical capability of the robot joints.</span></p>
+
+<p>Stage 1 consists of preliminary research on the innerworkings of the Nao Robot. This stage consists of information that reflects the early concepts of Intro to Robotics including Z coordinate systems and also DH parameters.&nbsp;</p>
+
+<h1 style="text-align: center;">Stage 1</h1>
+
+<p>&nbsp;</p>
+
+<p><span style="font-size:22px;"><strong>Task 1 &ndash; Derive the forward Kinematics of the Nao Robot&rsquo;s arm</strong></span></p>
+
+<p><span style="font-size:16px;">Any physical robot consist of joints, they can be either prismatic or revolute. Primatic joints move only in a linear motion while revolute joints move in an angular motion. After doing some research on the Alderan Nao Robot, we discovered that all the joints are revolute. This is helpful when we construct the DH parameters in the second task. <strong>D</strong>enavit-<strong>H</strong>artenburg parameters provide a&nbsp;systematic way to model all joints of a robot within a system. Each joint has it&#39;s own coordinate system&nbsp;and also an origin that specifies where the joint is in space. If there are preceeding joints in the kinematic chain&nbsp;leading up to this joint coordinate system,&nbsp;then it is important to have a way to locate all the robot joints in real world space.&nbsp;The Alderan Robot has a break down of how the joints work and is used to construct our DH parameters.&nbsp;Figure 1.1 displays the joint diagram for the robot, showing the various coordinates.&nbsp;</span></p>
+
+<p>&nbsp;</p>
+
+<p style="text-align: center;"><img src="Body Diagram NAO Robot.png" style="float:center;width:500px" /></p>
+
+<p style="text-align: center;"><strong><span style="font-size:16px;">Figure&nbsp;1.1 - Left Arm Coordinate System of Nao Robot</span></strong></p>
+
+<p>The only axis needed for DH calculations are <strong>Z&nbsp;</strong>and&nbsp;<strong>X, </strong>the&nbsp;y axis is omitted. The left and right hand of the Nao robot are symetrical and have identical coordinate systems orientations. This diagram provides the orientation of all the joints in relation to each other. The coordinate system&nbsp;<strong>Z<sub>5</sub>&nbsp;</strong>is the effector, which is the hand of the arm.&nbsp;<span style="font-size: 16px;">Each joint accomplishes a different task indepentent of each other. Many of the joints are similar to how the human arm rotates. For example the first joint in the kinematic chain represens the&nbsp;</span><em style="font-size: 16px;">Shoulder Pitch</em><span style="font-size: 16px;">&nbsp;and the second joint is constituant to the&nbsp;</span><em style="font-size: 16px;">Shoulder Roll</em><span style="font-size: 16px;">. There are certain rules that need to be followed to obtain the correct DH paramters.&nbsp;The <strong>F</strong><b>igure 1.3&nbsp;</b>below displays the final DH parameters for the left arm of the robot.</span></p>
+
+<p style="text-align: center;"><strong style="text-align: center;">Figure 1.2 - Dimensions and Link Lengths of the Nao Robot</strong></p>
+
+<p style="text-align: center;"><img align="middle" src="Joint Diagram Illustrated of NAO Robot.PNG" style="width:253px" /> <img align="middle" src="Link Information of NAO Robot.PNG" style="width: 253px;" /></p>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<p>As metioned above, we also use the dimensions of the physical robot to add to our DH parameters. They are respectively labled in the table for reference, Upper Arm length is an example of 105 mm. With this in mind every link has&nbsp;it&#39;s own transformation matrix. In total there are&nbsp;five transformatin matrix which are then multiplied to achieve all orientations of each joint at any instance. The matrices are interchangebly named Transformation matrix, Homogeneous matrix or even by the letter&nbsp;<strong>A&shy;<sub>&shy;i&nbsp;</sub></strong>with i substitue for the Z coordinate of interest.&nbsp;&nbsp;A template for each link leads to a 4x4 matrix described below.</p>
+
+<table align="center" border="1" cellpadding="1" cellspacing="1" style="width: 500px">
+	<caption>
+	<p style="text-align: center;"><strong>Figure 1.3 DH Parameters for the Nao Robot</strong></p>
+	</caption>
+	<thead>
+		<tr>
+			<th scope="col"><strong>Link</strong></th>
+			<th scope="col">a<sub>i</sub></th>
+			<th scope="col">&alpha;<sub>i</sub></th>
+			<th scope="col"><span style="font-weight: bold; text-align: center;">d</span><sub style="font-weight: bold; text-align: center;">i</sub></th>
+			<th scope="col">&theta;&shy;&shy;<sub>i</sub></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="text-align: center;">1</td>
+			<td style="text-align: center;">0</td>
+			<td style="text-align: center;">90 degrees</td>
+			<td style="text-align: center;">0</td>
+			<td style="text-align: center;">variable1</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">2</td>
+			<td style="text-align: center;">105mm (Upper arm)</td>
+			<td style="text-align: center;">90 degrees</td>
+			<td style="text-align: center;">15mm (Elbow offset)</td>
+			<td style="text-align: center;">variable2</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">3</td>
+			<td style="text-align: center;">0</td>
+			<td style="text-align: center;">-90 degrees</td>
+			<td style="text-align: center;">0</td>
+			<td style="text-align: center;">variable3</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">4</td>
+			<td style="text-align: center;">55.95mm (Lower arm)</td>
+			<td style="text-align: center;">90 degrees</td>
+			<td style="text-align: center;">0</td>
+			<td style="text-align: center;">variable4</td>
+		</tr>
+		<tr>
+			<td style="text-align: center;">5</td>
+			<td style="text-align: center;">0</td>
+			<td style="text-align: center;">0</td>
+			<td style="text-align: center;">55.75mm (Hand offset)</td>
+			<td style="text-align: center;">0</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>&nbsp;</p>
+
+<p style="text-align: center;"><b>Figure 1.4 -&nbsp;4x4 Matrix of coordinate system Z<sub>i</sub></b></p>
+
+<table align="center" border="1" cellpadding="0" cellspacing="0">
+	<tbody>
+		<tr>
+			<td style="width: 102px;">
+			<p>cos &theta;&shy;&shy;<sub>i</sub></p>
+			</td>
+			<td style="width: 120px;">
+			<p>-sin &theta;&shy;&shy;<sub>i</sub>&nbsp;cos &alpha;<sub>i</sub></p>
+			</td>
+			<td style="width: 108px;">
+			<p>sin &theta;&shy;&shy;<sub>i</sub>&nbsp;sin &alpha;<sub>i</sub></p>
+			</td>
+			<td style="width: 114px;">
+			<p>a<sub>i</sub>&nbsp;cos &theta;&shy;&shy;<sub>i</sub></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 102px;">
+			<p>sin &theta;&shy;&shy;<sub>i</sub></p>
+			</td>
+			<td style="width: 120px;">
+			<p>cos &theta;&shy;&shy;<sub>i</sub>&nbsp;cos &alpha;<sub>i</sub></p>
+			</td>
+			<td style="width: 108px;">
+			<p>-cos &theta;&shy;&shy;<sub>i</sub>&nbsp;sin &alpha;<sub>i</sub></p>
+			</td>
+			<td style="width: 114px;">
+			<p>a<sub>i</sub>&nbsp;sin &theta;&shy;&shy;<sub>i</sub></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 102px;">
+			<p>0</p>
+			</td>
+			<td style="width: 120px;">
+			<p>sin &alpha;<sub>i</sub></p>
+			</td>
+			<td style="width: 108px;">
+			<p>cos &alpha;<sub>i</sub></p>
+			</td>
+			<td style="width: 114px;">
+			<p>d<sub>i</sub></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 102px;">
+			<p>0</p>
+			</td>
+			<td style="width: 120px;">
+			<p>0</p>
+			</td>
+			<td style="width: 108px;">
+			<p>0</p>
+			</td>
+			<td style="width: 114px;">
+			<p>1</p>
+
+			<div>&nbsp;</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><span style="font-size:16px;">There is padding at the bottom of <strong>Figure 1.4&nbsp;</strong>to accommodate for the different sizes of the inner matrices. Below is the description of each transformation matrix. This allows having a square matrix for multiplying other matrices for transformation purposes.&nbsp;Since all the joints of the robot are revolute the only variable is </span>&theta;&shy;&shy;<sub>i&nbsp;</sub>which determines how the robot accuates. <span style="font-size:16px;">All the entries with has&nbsp;&theta;&shy;&shy;<sub>I </sub>meaning that it corresponds to that link and it also is a variable that can change. The other values will remain constant for the duration of our project since we are using the Nao robot and there are no prismatic joints in our systems.</span></p>
+
+<p style="text-align: center;"><strong style="text-align: center;">Figure 1.4 - Homogeneous Matrix Template</strong></p>
+
+<p style="text-align: center;"><img src="Structure of a Homogenous Matrix.PNG" style="float:center;width:500px" /></p>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<p>E<span style="font-size:16px;">ach homogenous transformation matrix is multipled to calculate the position of the end effector and the translation.&nbsp;To accomplish this the&nbsp;equation has&nbsp;[A<sub>i-1</sub>][A<sub>i</sub>] from i = 1 until i = 5 with <strong>A&nbsp;</strong>representing each homogeneous transformation matrix.&nbsp;The expression is formally known as&nbsp;<strong>T = A<sub>1</sub>A<sub>2</sub>A<sub>3</sub>A<sub>4</sub>A<sub>5.&nbsp;</sub></strong>Our python script is a host to multiple joints for each synergetic movement. For example, it can contain&nbsp;a series of joint angles&nbsp;for shorter distance throws and a completely different set of joint angles that is able to achieve longer throwing distances.</span></p>
+
+<p><strong><font size="3">Numpy&nbsp;</font></strong><font size="3">is a mathematics library use to multiply matrices together and it returns a final matrix. Here is an example of how it is utilized:&nbsp;</font></p>
+
+<blockquote>
+<p>import numpy as np</p>
+
+<p>np.set_printoptions(precision = 1)<br />
+pi = np.pi</p>
+
+<p>def convertRadian(theta):<br />
+&nbsp; &nbsp; radian = (theta) * (np.pi) / 180<br />
+&nbsp; &nbsp; return radian</p>
+
+<p>def mkMatrix(radian, alpha, dis):<br />
+&nbsp; &nbsp; matrix = np.matrix([[np.cos(radian),(-1)*np.sin(radian)*np.cos(alpha), np.sin(radian)*np.sin(alpha), a1 * np.cos(radian)],<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [np.sin(radian), np.cos(radian)*np.cos(alpha), (-1)*np.cos(radian)*np.sin(alpha), a1 * np.sin(radian)],<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [0,np.sin(alpha), np.cos(alpha), dis],<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [0,0,0,1]])<br />
+&nbsp; &nbsp; return matrix</p>
+</blockquote>
+
+<p>After recieving input from the User, the respective angles are referenced inside of a function that returns the matrix with the Angle, Link length, and link twist. The program outputs the resulting matrix, while another numpy function multiplies the matrices.</p>
+
+<p><span style="font-size:16px;">&nbsp;</span></p>
+
+<p><span style="font-size:22px;"><strong>Task 3 &ndash; Build the physical model of the throwing ball</strong></span></p>
+
+<p><span style="font-size:16px;">&nbsp; &nbsp; To accomplish this task we must consider this to be classical projectile motion physics. Projectile Motion for the robot is considered only in two dimensions for simplicity. An assumption is made that the origin of the throw is location at <strong>delta</strong>&nbsp;z from the ground to the release height of the hand.&nbsp;The velocity vector is&nbsp;split up into Z and X vector, which structues the height and distance displacement of the projectile.&nbsp;</span></p>
+
+<p><span style="font-size:16px;">&nbsp; &nbsp; The robot height is calculated by adding the&nbsp;<em>HipOffsetZ</em>, <em>NeckOffsetZ</em>, and <i>LowerArm Length </i>which accomodates when the robot throws the ball at a higher distance. The arm is going to launch the ball at a 45 degree angle for maximum time spent in the air.&nbsp;Using trigonometric <strong>sin </strong>we calculate the displacement to be 0.155m. We add this value to the other values to get a total value of 0.61459m for the Z height where the ball is&nbsp;thrown. This height and the velocity of gravity&nbsp;</span><span style="font-size: 16px;">(9.8m/s</span><sup>2</sup><span style="font-size: 16px;">)&nbsp;</span><span style="font-size: 16px;">determines that&nbsp;ball is estimate to be in the air&nbsp;for roughly&nbsp;0.25 seconds. We model this by the formula:</span>&nbsp;<strong>V<sub>0</sub> = (d &ndash; cos (45))/t</strong> with d being the horizontal displacement of the target from the robot arm subtracted from the little bit of the hand carry over into the system before projectile motion happens.</p>
+
+<h1 style="text-align: center;">Stage 2</h1>
+
+<p>This stage is for testing the nao robot with our derived DH parameters. The project uses primarily only forward kinematics to throw the ball. We begin with using the virutal Nao Robot and then go to test our code in the robotics laboratory where the physical robot is accessible.</p>
+
+<p><span style="font-size:22px;"><strong>Task 1 &ndash; Validate the solution for the DH &ndash; parameters of the Nao Robot arm</strong></span></p>
+
+<p>Before using the real robot there was a lot of testing in the Choregraphe suite which is an emulation of the nao robot. Different angles were tested to ensure we didn&#39;t have any angles that were out of range of the robot.&nbsp;We were successful in confirming the movement of the robot and it&rsquo;s end effector translation in world space. We chose to do forward kinematics for our project and&nbsp;we use a table of angles to feed to the robot libraries. This would allow to achieve the desired motion for trajectory motion.&nbsp;</p>
+
+<p><span style="font-size:22px;"><strong>Task 2&nbsp;</strong></span><strong style="font-size: 22px;">&ndash;</strong><span style="font-size:22px;"><strong>&nbsp;Test the angle configurations with the Nao Robot</strong></span></p>
+
+<p>As mentioned above, the provided library for python is used to control&nbsp;the robot. Below in figure 2.1 is the snippet of code that shows how the table of angle sets are injected into the function calls that move the robot arm.&nbsp;</p>
+
+<p style="text-align: center;"><strong>Figure 2.1 - Python code for robot control</strong></p>
+
+<blockquote>
+<p><span style="font-size:14px;">motionProxy <strong>=</strong> ALProxy<strong>(</strong>&quot;ALMotion&quot;<strong>,</strong> &quot;169.254.226.148&quot;<strong>,</strong> 9559<strong>)</strong></span></p>
+
+<p><span style="font-size:14px;"># Function takes 5 joint angles as inputs and moves the Nao Robot&#39;s right arm.</span></p>
+
+<p><span style="font-size:14px;"><strong>def</strong> moveArm<strong>(</strong>SPitch<strong>,</strong> SRoll<strong>,</strong> EYaw<strong>,</strong> ERoll<strong>,</strong> WYaw<strong>,</strong> Hand<strong>,</strong> fractionMaxSpeed<strong>):</strong></span></p>
+
+<p><span style="font-size:14px;">&nbsp;&nbsp; # postureProxy.goToPosture(&quot;Stand&quot;, 0.8)</span></p>
+
+<p><span style="font-size:14px;">&nbsp;&nbsp;&nbsp; motionProxy<strong>.</strong>setStiffnesses<strong>(</strong>&quot;RArm&quot;<strong>,</strong> 1.0<strong>) #makes the arm stiff so that it doesn&#39;t move</strong></span></p>
+
+<p><span style="font-size:14px;">&nbsp;&nbsp;&nbsp; names&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>=</strong> &quot;RShoulderPitch&quot;</span></p>
+
+<p><span style="font-size:14px;">&nbsp;&nbsp;&nbsp; angles&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>=</strong> SPitch<strong>*</strong>almath<strong>.</strong>TO_RAD</span></p>
+
+<p><span style="font-size:14px;">&nbsp;&nbsp;&nbsp; #fractionMaxSpeed = 0.5</span></p>
+
+<p><span style="font-size:14px;">&nbsp;&nbsp;&nbsp; motionProxy<strong>.</strong>setAngles<strong>(</strong>names<strong>,</strong>angles<strong>,</strong> fractionMaxSpeed<strong>) #move the specified joint</strong></span></p>
+</blockquote>
+
+<p>In <em>figure 2.1 </em>a global function is defined&nbsp;that accepts the respective rotation in radians for each joint in the arm. This function passes this list of values into the &ldquo;setAngles&rdquo; method from the NaoQi library. This is done&nbsp;to model each motion the robot needs to traverse. In the kinematic chain, the Right Should Pitch is first and then the Right Hand (End Effector) is the final coordinate system.</p>
+
+<p>&nbsp;</p>
+
+<p><span style="font-size:22px;"><strong>Task 3 &ndash; Develop&nbsp;a program to compute the ball projectile motion</strong></span></p>
+
+<p><span style="font-size: 16px;">This task is to figure out the initial velocity of the ball so that it reaches the desired distance. This model is&nbsp;described in </span><em style="font-size: 16px;">figure 3.1</em><span style="font-size: 16px;"> showing&nbsp;the motion of the trajectory. Recall that vector v</span><sub>0</sub><span style="font-size: 16px;">&nbsp;that is split to Z&nbsp;and X&nbsp;coordinate, only two dimensions. This prevents&nbsp;throwing&nbsp;the ball in a curved fashion and more in a linear pattern with repect to the y axis. The shoulder roll component is omitted since it is used only to manipulate the Y axis, if the model was in three dimensions.</span></p>
+
+<p>&nbsp;This system of two equations can now be solved for velocity and time. <strong>V<sub>0</sub></strong> is the initial speed the robot must transfer to the&nbsp;ball and <strong>t</strong> is the time after the ball reaches the target. The motion of the ball consists of the speed in Z&nbsp;and X&nbsp;direction. The x direction is: x = v<sub>o&nbsp;</sub>* t + x<sub>o </sub>and Z&nbsp;= -1/2 gt<sup>2 </sup>+ v<sub>0Z</sub>*t + z<sub>0</sub>. In elemntary physics, gravity is the only force that will bring the ball to rest.&nbsp;Using geometry the initial speeds can be expressed as v<sub>0</sub>&nbsp;= cos(theta)v<sub>0x</sub>&nbsp;while the y component is v<sub>0</sub>=sin(theta)v<sub>0z&nbsp;</sub>. &nbsp;Here is a visual description of the Nao Robot how the height was calculated when the robot is sitting down.&nbsp;</p>
+
+<p style="text-align: center;"><img src="body dimensions.PNG" style="float: left; width: 500px;" /></p>
+
+<p>Since the formula for projectile motion is quadratic, only the positive solution is valid for this scenario.&nbsp;Considering the Nao Robot the initial height Z<sub>0</sub> will be ( 85 mm + 126.5 mm + 55.95 mm (lower arm length)) / 1000 = .26745m. This means that Z<sub>0</sub><em>=0.26745m.</em>&nbsp;Below is the code that performs our calculations for a distance that is 1 meter away.&nbsp;</p>
+
+<blockquote>
+<p><strong>import</strong> sympy <strong>as</strong> sp</p>
+
+<p><strong>import</strong> math</p>
+
+<p>g<strong>=</strong>9.82 #gravitation constant</p>
+
+<p>angle<strong>=</strong>45 #compute speed with fixed angle</p>
+
+<p>throwHeight <strong>=</strong> 0.51554</p>
+
+<p># the function takes the position of the target and the release position of the ball</p>
+
+<p># and returns the optimum release speed to hit the target.</p>
+
+<p># @param x- x value of the Target</p>
+
+<p># @param y- y value of the Target</p>
+
+<p># @param x0- x value of the initial position</p>
+
+<p># @param y0- y value of the initial position</p>
+
+<p><strong>def</strong> getReleaseSpeedForTarget<strong>(</strong>x<strong>,</strong>y<strong>,</strong>x0<strong>,</strong>y0<strong>):</strong> # x,y = position of target y should be y=0 in most times (target on floor)</p>
+
+<p>&nbsp;&nbsp;&nbsp; t<strong>,</strong>v<strong>=</strong>sp<strong>.</strong>symbols<strong>(</strong>&#39;t,v&#39;<strong>)</strong>#variables</p>
+
+<p>&nbsp;&nbsp;&nbsp; f1<strong>=(</strong>v<strong>*</strong>math<strong>.</strong>cos<strong>(</strong>angle<strong>)*</strong>t<strong>)-</strong>x<strong>+</strong>x0#x direction</p>
+
+<p>&nbsp;&nbsp;&nbsp; f2<strong>=(-</strong>1<strong>/</strong>2<strong>)*</strong>g<strong>*</strong>t<strong>*</strong>t<strong>+</strong>v<strong>*</strong>math<strong>.</strong>sin<strong>(</strong>angle<strong>)*</strong>t<strong>+</strong>y0# y direction</p>
+
+<p>&nbsp;&nbsp;&nbsp; result<strong>=</strong>sp<strong>.</strong>solvers<strong>.</strong>solve<strong>((</strong>f1<strong>,</strong>f2<strong>),(</strong>v<strong>,</strong>t<strong>))</strong>#solve equations</p>
+
+<p>&nbsp;&nbsp;&nbsp; <strong>if</strong> result<strong>[</strong>0<strong>][</strong>0<strong>]&gt;</strong>0<strong>:</strong><strong>return</strong> e<strong>[</strong>0<strong>][</strong>0<strong>]</strong>#choose positive solution</p>
+
+<p>&nbsp;&nbsp;&nbsp; <strong>else</strong><strong>:</strong> <strong>return</strong> e<strong>[</strong>1<strong>][</strong>0<strong>]</strong></p>
+
+<p>v <strong>=</strong> getReleaseSpeedForTarget<strong>(</strong>1<strong>,</strong>0<strong>,</strong>0<strong>,</strong>0.throwHeight<strong>)</strong>#example value 1m</p>
+
+<p>vx<strong>=</strong> v<strong>/</strong>math<strong>.</strong>cos<strong>(</strong>angle<strong>)</strong></p>
+
+<p>vy<strong>=</strong> v<strong>/</strong>math<strong>.</strong>cos<strong>(</strong>angle<strong>)</strong></p>
+</blockquote>
+
+<h1 style="text-align: center;">Stage 3</h1>
+
+<p>&nbsp; &nbsp; The robot is now ready to test for trajectory motion. We configured the robot to throw for two different scenarios, for example it can perform long distance throws and shorter throws. The long distance throw measures about 1 meter while the shorter distance is about half a meter from the arm to the target. For this experiement we chose to use a cup for our target. This is ideal for trajectory motion since the ball follows an arc motion shown below.</p>
+
+<p style="text-align: center;"><img src="drawnTrajectory.jpg" style="float:center;width:500px" /></p>
+
+<p style="text-align: center;"><strong>Figure 3.1 -- &nbsp;The path of the trajectory</strong></p>
+
+<p>&nbsp; &nbsp; The robot models the trajecory motion concept, below is a visual description of the elementary physics.&nbsp;</p>
+
+<p style="text-align: center;"><img src="projectileMotion.jpg" style="float:center;width:600px" /> <img src="trajectory line with dimensions.jpg" style="float:center;width:253px" /></p>
+
+<p><b>&nbsp; &nbsp;&nbsp;</b>The figure above shows how we approached the trajectory motion model. Initially we considered utilizing all three dimensions when the robot throws the ball; however, the best approach was to break down the model into only two dimensions Z and X. This was helpful not only because there was less joints to manipulate at any one instance but also because the Nao Robot hand provides three fingers for basic grasping and other miscellaneous tasks. As shown in the demonstration video we show how the ball was slipping out of the hand of the robot, and contributing to wasted energy thus less distance acheivable for the ball.&nbsp;</p>
+
+<p style="text-align: center;"><strong>Figure 3.2 -- Final Demonstration Video&nbsp;hosted on YouTube</strong></p>
+
+<p style="text-align: center;"><iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/n0IW_GeoHs4" width="560"></iframe></p>
+
+<p style="text-align: center;">&nbsp;</p>
+
+<h1 style="text-align: center;">Testing</h1>
+
+<p>The testing phase included interesting bugs that were previously not considered upon deriving the forward kinematics. For example, originally the robot was going to throw the ball from an upright standing position. There was a flaw in this design because our forward kinematics would cause a force reaction through the whole body of the robot. The robot was not stable enough to stay upright while throwing the ball. In this case the robot was placed in a seated position allowing for more stable results and less chance of the robot losing balance. The height of the system is recalculated to represent this configuration of when the robot is sitting down to throw the ball. Another issue led us to adopt two dimensional projectile motion is because the robot could not twist it&#39;s wrist at the correct time to keep the ball from swiping out of it&#39;s hand. The video above describes this in a clip.</p>
+
+<h1 style="text-align: center;"><strong>Conclusion</strong></h1>
+
+<p><strong>&nbsp; &nbsp;&nbsp;</strong>This was a fun and exciting project since we had the ability to apply robotics to our specific task that we chose for this project. The most promising part of the project was being able to see the robot throw the projectile and succesfully land it into the target. The video provided also shows the live demonstration of the robot throwing the ball into the cup from different distances. Learning about robots helped envision the fundamental aspects of many commercial product out on the market.&nbsp;</p>
+
+<p>&nbsp;</p>
