@@ -1,0 +1,120 @@
+Init wizardMutex to 0...
+In wizard(A0) thread, putting my self to sleep. semvalue before wait: 0
+In wizard(B0) thread, putting my self to sleep. semvalue before wait: 0
+In wizard(B1) thread, putting my self to sleep. semvalue before wait: 0
+cube> c
+Game has not started, cannot continue
+cube> start
+cube> c
+'c' presssed, looping until the endIn loopSteps. game_status: 0.
+It's nobodies turn, giving wizard a turn
+cube->game_status: 0
+waking a wizard to take a turn.
+sleeping interface mutex
+In choose_room -- newx 0 and newy -1Wizard A0 in room (0,9) wants to go to room (0,8)
+In try_room... room(0, 8)found space in slot ONE!
+Found a valid room!
+Wizard A0 in room (0,9) moves to room (0,8)
+Wizard removed self from the old room.
+Wizard set location in new room.
+Wizard A0 in room (0,8) finds nobody around 
+Wizard A0 turn is over.
+wizardMutex value: 0, sem_wait on wizardMutex, end of wizard turn
+step function awake. Going to check for a winner.
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |B |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|A |B |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+It's nobodies turn, giving wizard a turn
+cube->game_status: 0
+waking a wizard to take a turn.
+sleeping interface mutex
+In choose_room -- newx -1 and newy 0Wizard B0 in room (8,5) wants to go to room (7,5)
+In try_room... room(7, 5)found space in slot ONE!
+Found a valid room!
+Wizard B0 in room (8,5) moves to room (7,5)
+Wizard removed self from the old room.
+Wizard set location in new room.
+Wizard B0 in room (7,5) finds nobody around 
+Wizard B0 turn is over.
+wizardMutex value: 0, sem_wait on wizardMutex, end of wizard turn
+step function awake. Going to check for a winner.
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |B |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|A |B |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+It's nobodies turn, giving wizard a turn
+cube->game_status: 0
+waking a wizard to take a turn.
+sleeping interface mutex
+In choose_room -- newx 0 and newy -1Wizard B1 in room (1,8) wants to go to room (1,7)
+In try_room... room(1, 7)found space in slot ONE!
+Found a valid room!
+Wizard B1 in room (1,8) moves to room (1,7)
+Wizard removed self from the old room.
+Wizard set location in new room.
+Wizard B1 in room (1,7) finds nobody around 
+Wizard B1 turn is over.
+wizardMutex value: 0, sem_wait on wizardMutex, end of wizard turn
+step function awake. Going to check for a winner.
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |B |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |B |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|A |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+|  |  |  |  |  |  |  |  |  |  |
++--+--+--+--+--+--+--+--+--+--+
+It's nobodies turn, giving wizard a turn
+cube->game_status: 0
+waking a wizard to take a turn.
+sleeping interface mutex
+Segmentation fault
+
