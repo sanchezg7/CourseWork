@@ -1,0 +1,116 @@
+;------------------------------------------;
+;  			Defining Delay lengths		   ;
+;------------------------------------------;
+
+CONSTANT delay_1us_constant  , 24'd
+
+NAMEREG sA , data7_4 
+NAMEREG sB , data3_0
+
+;------------------------------------------;
+;  	     	Defining Ports and Regs	 	   ;
+;------------------------------------------;
+
+CONSTANT port_up 		,		00			; Read inputs from buttons
+CONSTANT port_down   	,		01
+CONSTANT port_center 	,		02
+CONSTANT port_data 		,		03
+CONSTANT port_EN		,		04
+
+;-------------------------------------------;
+;				Prayer  					;
+;-------------------------------------------;
+ENABLE INTERRUPT
+
+	JUMP init
+	CALL delay_40us
+prayer:
+	LOAD data7_4, 05
+	LOAD data3_0, 08
+	CALL output_ctrl
+	JUMP prayer
+
+;-------------------------------------------;
+;				Defining Routine			;
+;-------------------------------------------;
+delay_1us: LOAD s0, delay_1us_constant
+wait_1us: SUB s0, 01'd
+		 JUMP NZ, wait_1us
+		 RETURN
+		 
+delay_2us: LOAD s0, delay_1us_constant
+wait_2us: SUB s0, 02'd
+		 JUMP NZ, wait_2us
+		 RETURN
+
+delay_EN: LOAD s0, delay_1us_constant
+wait_EN: SUB s0, 07'd
+		 JUMP NZ, wait_EN
+		 RETURN		 
+		 
+delay_40us: LOAD s1, 20'd                         ;20 x 2us = 40us
+wait_40us: CALL delay_2us
+		 SUB s1, 01
+		 JUMP NZ, wait_40us
+		 RETURN
+
+delay_2ms: LOAD s2, 50'd                         ;50 x 40us = 2ms
+wait_2ms: CALL delay_40us
+		 SUB s2, 01
+		 JUMP NZ, wait_2ms
+		 RETURN
+		 
+delay_30ms: LOAD s3, 15'd                         ;15 x 2ms = 30ms
+wait_30ms: CALL delay_2ms
+		 SUB s3, 01
+		 JUMP NZ, wait_30ms
+		 RETURN
+		 
+
+output_ctrl:
+	OUTPUT data7_4, port_data
+	JUMP pulse_EN
+	CALL delay_1us
+	OUTPUT data3_0, port_data
+	JUMP pulse_EN
+	RETURN
+
+pulse_EN:
+	LOAD s3, 01
+	OUTPUT s3, port_EN	
+	CALL delay_EN
+	LOAD s3, 00
+	OUTPUT s3, port_EN
+	RETURN	
+			
+;-------------------------------------------;
+;			Initialization of LCD			;
+;-------------------------------------------;
+init:
+	CALL delay_30ms
+	
+	LOAD data7_4, 02
+	LOAD data3_0, 02
+	CALL output_ctrl
+	
+	CALL delay_40us
+
+	
+	LOAD data7_4, 00
+	LOAD data3_0, 0F
+	CALL output_ctrl
+	
+	CALL delay_40us
+	
+	LOAD data7_4, 00
+	LOAD data3_0, 01
+	CALL output_ctrl
+	
+	CALL delay_2ms
+	
+	LOAD data7_4, 00
+	LOAD data3_0, 04
+	CALL output_ctrl
+	
+	RETURN
+	
