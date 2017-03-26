@@ -1,5 +1,4 @@
-Name: Gerardo Sanchez Molly Bauer
-Net Id: sanchezg mollybauer
+#File System Measurements
 
 Included source files:
 timing.h
@@ -56,8 +55,4 @@ Example:
 ./directPointers /tmp/test.txt
 
 This will run directPointers and it will create a file in the /tmp/ directory for testing
-
-
-
-
-
+/tmp/ is known to leverage local storage and not access network storage as a means to provide a more realistic measurement of file system performance. 
